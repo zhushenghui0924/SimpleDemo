@@ -1,0 +1,11 @@
+package ${package}.dao;
+import ${package}.domain.${className}DO;
+import tk.mybatis.mapper.common.Mapper;
+/**
+ * ${comments}
+ * @author ${author}
+ * @email ${email}
+ * @date ${datetime}
+ */
+public interface ${className}Dao extends Mapper<${className}>{
+}
