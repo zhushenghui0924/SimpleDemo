@@ -2,8 +2,8 @@ package com.sf.common.utils;
 
 
 import com.sf.common.Bean.ColumnBean;
-import com.sf.common.config.Constant;
 import com.sf.common.Bean.TableBean;
+import com.sf.common.config.Constant;
 import org.apache.commons.configuration.Configuration;
 import org.apache.commons.configuration.ConfigurationException;
 import org.apache.commons.configuration.PropertiesConfiguration;
@@ -29,7 +29,7 @@ public class GenUtils {
 
     public static List<String> getTemplates() {
         List<String> templates = new ArrayList<String>();
-        templates.add("templates/common/generator/domain.java.vm");
+        templates.add("templates/common/generator/model.java.vm");
         templates.add("templates/common/generator/Dao.java.vm");
         //templates.add("templates/common/generator/Mapper.java.vm");
         templates.add("templates/common/generator/Mapper.xml.vm");
@@ -179,8 +179,8 @@ public class GenUtils {
             packagePath += packageName.replace(".", File.separator) + File.separator;
         }
 
-        if (template.contains("domain.java.vm")) {
-            return packagePath + "domain" + File.separator + className + ".java";
+        if (template.contains("model.java.vm")) {
+            return packagePath + "model" + File.separator + className + ".java";
         }
 
         if (template.contains("Dao.java.vm")) {

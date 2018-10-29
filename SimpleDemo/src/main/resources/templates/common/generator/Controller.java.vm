@@ -37,9 +37,9 @@ public class ${className}Controller {
 	}
 	
 	@ResponseBody
-	@GetMapping("/list")
+	@PostMapping("/list")
 	@RequiresPermissions("${pathName}:${classname}:${classname}")
-	public PageUtils list(@RequestBody BootStrapTableQuery bootStrapTableQueryBean,${className} ${classname}){
+	public PageUtils list(@RequestBody BootStrapTableQueryBean bootStrapTableQueryBean,${className} ${classname}){
 		/使用分页插件,核心代码就这一行
         PageHelper.offsetPage(bootStrapTableQueryBean.getPage().getOffset(),bootStrapTableQueryBean.getPage().getLimit());
         //字段非模糊查询
@@ -48,7 +48,7 @@ public class ${className}Controller {
 //		}
 //		List<${className}> ${classname}List =  ${classname}Service.list(${classname});
         // 字段模糊查询
-        List<${className}> ${classname}List = ${classname}Service.listForLike(${classname},bootStrapTableQueryBean.getSearch().getSearchColumn(),bootStrapTableQueryBean.getSearch().getSearchValue());
+        List<${className}> ${classname}List = ${classname}Service.like(${classname},bootStrapTableQueryBean.getSearch().getSearchColumn(), bootStrapTableQueryBean.getSearch().getSearchValue(), bootStrapTableQueryBean.getSearch().getDateType(), bootStrapTableQueryBean.getSearch().getOrderBy());
         PageUtils pageUtils = new PageUtils(new PageInfo<>(${classname}List));
 		return pageUtils;
 	}
@@ -59,10 +59,10 @@ public class ${className}Controller {
 	    return "${pathName}/${classname}/add";
 	}
 
-	@GetMapping("/edit/{${pk.attrname}}")
+	@GetMapping("/edit/{${pk.lowercaseAttName}}")
 	@RequiresPermissions("${pathName}:${classname}:edit")
-	String edit(@PathVariable("${pk.attrname}") ${pk.attrType} ${pk.attrname},Model model){
-		${className} ${classname} = ${classname}Service.getById(${pk.attrname});
+	String edit(@PathVariable("${pk.lowercaseAttName}") ${pk.attrType} ${pk.lowercaseAttName},Model model){
+		${className} ${classname} = ${classname}Service.getById(${pk.lowercaseAttName});
 		model.addAttribute("${classname}", ${classname});
 	    return "${pathName}/${classname}/edit";
 	}
@@ -96,8 +96,8 @@ public class ${className}Controller {
 	@PostMapping( "/remove")
 	@ResponseBody
 	@RequiresPermissions("${pathName}:${classname}:remove")
-	public R remove( ${pk.attrType} ${pk.attrname}){
-		if(${classname}Service.deleteById(${pk.attrname})>0){
+	public R remove( ${pk.attrType} ${pk.lowercaseAttName}){
+		if(${classname}Service.deleteById(${pk.lowercaseAttName})>0){
 		return R.ok();
 		}
 		return R.error();

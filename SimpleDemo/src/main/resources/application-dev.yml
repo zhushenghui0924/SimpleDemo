@@ -1,5 +1,15 @@
 sf:
-  uploadPath: c:/var/uploaded_files/
+  uploadPath: D:\\var\\uploaded_files\\
+#虚拟路径
+file:
+  staticAccessPath: /api/file/**
+#异步线程池
+async:
+  executor:
+    thread:
+      core_pool_size: 3
+      max_pool_size: 5
+      queue_capacity: 5
 logging:
   level:
     root: info
@@ -8,7 +18,7 @@ spring:
   datasource:
     type: com.alibaba.druid.pool.DruidDataSource
     driverClassName: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://127.0.0.1:3306/simple_demo?useSSL=false&serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=utf8
+    url: jdbc:mysql://localhost:3306/simple_demo?useSSL=false&serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=utf8
     username: root
     password: root
     initialSize: 1
