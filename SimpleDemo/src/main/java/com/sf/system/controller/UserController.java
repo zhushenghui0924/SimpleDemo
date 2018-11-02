@@ -46,21 +46,14 @@ public class UserController extends BaseController {
 
 	@ResponseBody
 	@PostMapping("/list")
-	@RequiresPermissions("common:dict:dict")
+	@RequiresPermissions("sys:user:user")
 	public PageUtils list(@RequestBody BootStrapTableQueryBean bootStrapTableQueryBean, User user) throws InvocationTargetException, IllegalAccessException {
 		//使用分页插件,核心代码就这一行
 		PageHelper.offsetPage(bootStrapTableQueryBean.getPage().getOffset(), bootStrapTableQueryBean.getPage().getLimit());
-		//字段非模糊查询
-		if(StringUtils.isNotBlank(bootStrapTableQueryBean.getSearch().getSearchValue())&&StringUtils.isNotBlank(bootStrapTableQueryBean.getSearch().getSearchColumn())){
-			BeanUtils.setProperty(user, bootStrapTableQueryBean.getSearch().getSearchColumn(), bootStrapTableQueryBean.getSearch().getSearchValue());
-		}
-		if(StringUtils.isNotBlank(bootStrapTableQueryBean.getT().toString())){
-			BeanUtils.setProperty(user,"deptId", bootStrapTableQueryBean.getT().toString());
-		}
-
-		List<User> userList = userService.list(user);
+//		List<User> userList = userService.list(user);
 //		// 字段模糊查询
-//		List<Dict> dictList = dictService.listForLike(dict,bootStrapTableQueryBean.getSearch().getSearchColumn(),bootStrapTableQueryBean.getSearch().getSearchValue(),bootStrapTableQueryBean.getSearch().getDateType(),bootStrapTableQueryBean.getSearch().getOrderBy());
+//		List<User> userList = userService.like(user,bootStrapTableQueryBean.getSearch().getSearchColumn(),bootStrapTableQueryBean.getSearch().getSearchValue(),bootStrapTableQueryBean.getSearch().getDateType(),bootStrapTableQueryBean.getSearch().getOrderBy());
+		List<User> userList = userService.getUsers(bootStrapTableQueryBean);
 		PageUtils pageUtils = new PageUtils(new PageInfo<>(userList));
 		return pageUtils;
 	}

@@ -304,7 +304,6 @@
     $(function () {
         connect();
     });
-
     function connect() {
         var sock = new SockJS("/endpointChat");
         var stomp = Stomp.over(sock);

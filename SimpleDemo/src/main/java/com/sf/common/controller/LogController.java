@@ -7,6 +7,7 @@ import com.sf.common.service.LogService;
 import com.sf.common.Bean.BootStrapTableQueryBean;
 import com.sf.common.utils.PageUtils;
 import com.sf.common.utils.R;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -34,13 +35,8 @@ public class LogController {
 	PageUtils list(@RequestBody BootStrapTableQueryBean bootStrapTableQueryBean, Log log) {
 		//使用分页插件,核心代码就这一行
 		PageHelper.offsetPage(bootStrapTableQueryBean.getPage().getOffset(), bootStrapTableQueryBean.getPage().getLimit());
-		//字段非模糊查询
-//		if(StringUtils.isNotBlank(params.get("searchValue").toString())&&StringUtils.isNotBlank(params.get("searchColumn").toString())){
-//			ReflectGetSet.invokeSet(dict,bootStrapTableQueryBean.getSearch().getSearchColumn(),bootStrapTableQueryBean.getSearch().getSearchValue());
-//		}
-//		List<Dict> dictList = dictService.list(dict);
 		// 字段模糊查询
-		List<Log> logList = logService.like(log, bootStrapTableQueryBean.getSearch().getSearchColumn(), bootStrapTableQueryBean.getSearch().getSearchValue(), bootStrapTableQueryBean.getSearch().getDateType(), bootStrapTableQueryBean.getSearch().getOrderBy());
+		List<Log> logList = logService.like(log, bootStrapTableQueryBean);
 		PageUtils pageUtils = new PageUtils(new PageInfo<>(logList));
 		return pageUtils;
 	}
@@ -52,5 +48,15 @@ public class LogController {
 			return R.ok();
 		}
 		return R.error();
+	}
+
+	/**
+	 * 批量删除
+	 */
+	@PostMapping("/batchRemove")
+	@ResponseBody
+	public R remove(@RequestParam("ids[]") String ids) {
+		logService.batchRemove(ids);
+		return R.ok();
 	}
 }

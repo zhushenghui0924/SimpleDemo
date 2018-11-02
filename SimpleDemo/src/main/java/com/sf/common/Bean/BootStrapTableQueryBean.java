@@ -6,10 +6,9 @@ import lombok.Data;
  * 前台查询对象
  */
 @Data
-public class BootStrapTableQueryBean<T> {
+public class BootStrapTableQueryBean {
     private PageBean page;
 
     private SearchConditionBean search;
 
-    private T t;
 }

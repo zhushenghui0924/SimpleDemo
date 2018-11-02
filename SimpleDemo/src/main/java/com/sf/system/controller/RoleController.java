@@ -38,7 +38,7 @@ public class RoleController extends BaseController {
 		//使用分页插件,核心代码就这一行
 		PageHelper.offsetPage(bootStrapTableQueryBean.getPage().getOffset(), bootStrapTableQueryBean.getPage().getLimit());
 //		// 字段模糊查询
-		List<Role> roleList = roleService.like(role, bootStrapTableQueryBean.getSearch().getSearchColumn(), bootStrapTableQueryBean.getSearch().getSearchValue(), bootStrapTableQueryBean.getSearch().getDateType(), bootStrapTableQueryBean.getSearch().getOrderBy());
+		List<Role> roleList = roleService.like(role, bootStrapTableQueryBean);
 		PageUtils pageUtils = new PageUtils(new PageInfo<>(roleList));
 		return pageUtils;
 	}
@@ -54,7 +54,7 @@ public class RoleController extends BaseController {
 	@RequiresPermissions("sys:role:edit")
 	@GetMapping("/edit/{id}")
 	String edit(@PathVariable("id") Long id, Model model) {
-		Role role = roleService.getById(id);
+		Role role = roleService.selectById(id);
 		model.addAttribute("role", role);
 		return prefix + "/edit";
 	}

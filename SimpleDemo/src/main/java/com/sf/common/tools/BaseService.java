@@ -1,5 +1,8 @@
 package com.sf.common.tools;
 
+import com.sf.common.Bean.BootStrapTableQueryBean;
+import tk.mybatis.mapper.entity.Example;
+
 import java.util.List;
 
 /**
@@ -20,27 +23,23 @@ public interface BaseService<T> {
 
     /**
      * 根据指定字段模糊查询
-     * @param entity 实体
-     * @param searchColumn 查询字段名
-     * @param searchValue  字段值
-     * @param isDateType 是否是时间类型字段
      * @return
      */
-    List<T> like(T entity,String searchColumn,String searchValue,Boolean isDateType,String orderBy);
+    List<T> like(T entity, BootStrapTableQueryBean bootStrapTableQueryBean);
 
     /**
      * 获取对象
      * @param entity
      * @return
      */
-    T get(T entity);
+    T select(T entity);
 
     /**
      * 通过id获取对象
      * @param id
      * @return
      */
-    T getById(Long id);
+    T selectById(Long id);
 
     /**
      * 更新对象不为空的字段
@@ -80,4 +79,23 @@ public interface BaseService<T> {
      * 批量删除
      */
     int batchRemove(String ids);
+    /**
+     * 条件查询
+     */
+    List<T> selectExample(Example example);
+
+    /**
+     * 条件查询
+     */
+    T selectOneExample(Example example);
+
+    /**
+     * 条件查询
+     */
+    List<T> selectByIds(String ids);
+
+    /**
+     * 条件更新
+     */
+    int updateByExample(T t ,Example example);
 }

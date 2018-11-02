@@ -47,13 +47,8 @@ public class DictController extends BaseController {
 	public PageUtils list(@RequestBody BootStrapTableQueryBean bootStrapTableQueryBean, Dict dict){
 		//使用分页插件,核心代码就这一行
 		PageHelper.offsetPage(bootStrapTableQueryBean.getPage().getOffset(), bootStrapTableQueryBean.getPage().getLimit());
-		//字段非模糊查询
-//		if(StringUtils.isNotBlank(params.get("searchValue").toString())&&StringUtils.isNotBlank(params.get("searchColumn").toString())){
-//			ReflectGetSet.invokeSet(dict,bootStrapTableQueryBean.getSearch().getSearchColumn(),bootStrapTableQueryBean.getSearch().getSearchValue());
-//		}
-//		List<Dict> dictList = dictService.list(dict);
 		// 字段模糊查询
-		List<Dict> dictList = dictService.like(dict, bootStrapTableQueryBean.getSearch().getSearchColumn(), bootStrapTableQueryBean.getSearch().getSearchValue(), bootStrapTableQueryBean.getSearch().getDateType(), bootStrapTableQueryBean.getSearch().getOrderBy());
+		List<Dict> dictList = dictService.like(dict, bootStrapTableQueryBean);
 		PageUtils pageUtils = new PageUtils(new PageInfo<>(dictList));
 		return pageUtils;
 	}
@@ -77,7 +72,7 @@ public class DictController extends BaseController {
 	@GetMapping("/edit/{id}")
 	@RequiresPermissions("common:dict:edit")
 	String edit(@PathVariable("id") Long id, Model model) {
-		Dict dict = dictService.getById(id);
+		Dict dict = dictService.selectById(id);
 		model.addAttribute("dict", dict);
 		return "common/dict/edit";
 	}

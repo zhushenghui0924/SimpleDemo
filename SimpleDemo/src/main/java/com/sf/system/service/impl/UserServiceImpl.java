@@ -1,5 +1,6 @@
 package com.sf.system.service.impl;
 
+import com.sf.common.Bean.BootStrapTableQueryBean;
 import com.sf.common.config.BootdoConfig;
 import com.sf.common.model.FileDO;
 import com.sf.common.model.Tree;
@@ -52,6 +53,11 @@ public class UserServiceImpl extends BaseServiceImpl<User> implements UserServic
         user.setDeptName(deptDao.selectByPrimaryKey(user.getDeptId()).getName());
         user.setRoleIds(roleIds);
         return user;
+    }
+
+    @Override
+    public List<User> getUsers(BootStrapTableQueryBean bootStrapTableQueryBean) {
+        return userDao.getUsers(bootStrapTableQueryBean);
     }
 
     @Transactional
@@ -200,7 +206,7 @@ public class UserServiceImpl extends BaseServiceImpl<User> implements UserServic
     public Map<String, Object> updatePersonalImg(MultipartFile file, String avatar_data, Long userId) throws Exception {
         String fileName = file.getOriginalFilename();
         fileName = FileUtil.renameToUUID(fileName);
-        FileDO sysFile = new FileDO(FileType.fileType(fileName), "/files/" + fileName, new Date());
+        FileDO sysFile = new FileDO(FileType.fileType(fileName), "/files/" + fileName, fileName,new Date());
         //获取图片后缀
         String prefix = fileName.substring((fileName.lastIndexOf(".") + 1));
         String[] str = avatar_data.split(",");

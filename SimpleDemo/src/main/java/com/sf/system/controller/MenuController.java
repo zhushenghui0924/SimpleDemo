@@ -48,7 +48,7 @@ public class MenuController extends BaseController {
 		if (pId == 0) {
 			model.addAttribute("pName", "根目录");
 		} else {
-			model.addAttribute("pName", menuService.getById(pId).getName());
+			model.addAttribute("pName", menuService.selectById(pId).getName());
 		}
 		return prefix + "/add";
 	}
@@ -57,13 +57,13 @@ public class MenuController extends BaseController {
 	@RequiresPermissions("sys:menu:edit")
 	@GetMapping("/edit/{id}")
 	String edit(Model model, @PathVariable("id") Long id) {
-		Menu mdo = menuService.getById(id);
+		Menu mdo = menuService.selectById(id);
 		Long pId = mdo.getParentId();
 		model.addAttribute("pId", pId);
 		if (pId == 0) {
 			model.addAttribute("pName", "根目录");
 		} else {
-			model.addAttribute("pName", menuService.getById(pId).getName());
+			model.addAttribute("pName", menuService.selectById(pId).getName());
 		}
 		model.addAttribute("menu", mdo);
 		return prefix+"/edit";

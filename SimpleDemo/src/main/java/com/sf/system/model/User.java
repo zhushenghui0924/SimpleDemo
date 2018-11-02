@@ -133,7 +133,12 @@ public class User implements Serializable {
     @Transient
     private String deptName;
     /**
-     * 所属角色
+     * 所属角色实体
+     */
+    @Transient
+    private List<Role> roles;
+    /**
+     * 所属角色IDS
      */
     @Transient
     private List<Long> roleIds;

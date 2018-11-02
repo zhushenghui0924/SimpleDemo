@@ -49,7 +49,7 @@ public class LoginController extends BaseController {
 		List<Tree<Menu>> menus = menuService.listMenuTree(getUserId());
 		model.addAttribute("menus", menus);
 		model.addAttribute("name", getUser().getName());
-		FileDO fileDO = fileService.getById(getUser().getPicId());
+		FileDO fileDO = fileService.selectById(getUser().getPicId());
 		if(fileDO!=null&&fileDO.getUrl()!=null){
 			if(fileService.isExist(fileDO.getUrl())){
 				model.addAttribute("picUrl",fileDO.getUrl());

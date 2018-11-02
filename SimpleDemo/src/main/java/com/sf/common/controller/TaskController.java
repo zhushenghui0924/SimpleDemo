@@ -36,13 +36,8 @@ public class TaskController extends BaseController{
 	public PageUtils list(@RequestBody BootStrapTableQueryBean bootStrapTableQueryBean, Task task) {
 		//使用分页插件,核心代码就这一行
 		PageHelper.offsetPage(bootStrapTableQueryBean.getPage().getOffset(), bootStrapTableQueryBean.getPage().getLimit());
-		//字段非模糊查询
-//		if(StringUtils.isNotBlank(params.get("searchValue").toString())&&StringUtils.isNotBlank(params.get("searchColumn").toString())){
-//			ReflectGetSet.invokeSet(dict,bootStrapTableQueryBean.getSearch().getSearchColumn(),bootStrapTableQueryBean.getSearch().getSearchValue());
-//		}
-//		List<Dict> dictList = dictService.list(dict);
 		// 字段模糊查询
-		List<Task> taskList = taskService.like(task, bootStrapTableQueryBean.getSearch().getSearchColumn(), bootStrapTableQueryBean.getSearch().getSearchValue(), bootStrapTableQueryBean.getSearch().getDateType(), bootStrapTableQueryBean.getSearch().getOrderBy());
+		List<Task> taskList = taskService.like(task, bootStrapTableQueryBean);
 		PageUtils pageUtils = new PageUtils(new PageInfo<>(taskList));
 		return pageUtils;
 	}
@@ -54,7 +49,7 @@ public class TaskController extends BaseController{
 
 	@GetMapping("/edit/{id}")
 	String edit(@PathVariable("id") Long id, Model model) {
-		Task job = taskService.getById(id);
+		Task job = taskService.selectById(id);
 		model.addAttribute("job", job);
 		return "common/task/edit";
 	}
@@ -64,7 +59,7 @@ public class TaskController extends BaseController{
 	 */
 	@RequestMapping("/info/{id}")
 	public R info(@PathVariable("id") Long id) {
-		Task taskScheduleJob = taskService.getById(id);
+		Task taskScheduleJob = taskService.selectById(id);
 		return R.ok().put("taskScheduleJob", taskScheduleJob);
 	}
 

@@ -1,5 +1,6 @@
 package com.sf.system.service;
 
+import com.sf.common.Bean.BootStrapTableQueryBean;
 import com.sf.common.model.Tree;
 import com.sf.common.tools.BaseService;
 import com.sf.system.model.Dept;
@@ -8,12 +9,15 @@ import com.sf.system.vo.UserVO;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
 @Service
 public interface UserService extends BaseService<User> {
 	User get(Long id);
+
+	List<User> getUsers(BootStrapTableQueryBean bootStrapTableQueryBean);
 
 	int save(User user);
 

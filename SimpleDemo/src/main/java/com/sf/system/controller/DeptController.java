@@ -51,7 +51,7 @@ public class DeptController extends BaseController {
 		if (pId == 0) {
 			model.addAttribute("pName", "总部门");
 		} else {
-			model.addAttribute("pName", deptService.getById(pId).getName());
+			model.addAttribute("pName", deptService.selectById(pId).getName());
 		}
 		return  prefix + "/add";
 	}
@@ -59,12 +59,12 @@ public class DeptController extends BaseController {
 	@GetMapping("/edit/{deptId}")
 	@RequiresPermissions("sys:dept:edit")
 	String edit(@PathVariable("deptId") Long deptId, Model model) {
-		Dept sysDept = deptService.getById(deptId);
+		Dept sysDept = deptService.selectById(deptId);
 		model.addAttribute("sysDept", sysDept);
 		if(Constant.DEPT_ROOT_ID.equals(sysDept.getParentId())) {
 			model.addAttribute("parentDeptName", "无");
 		}else {
-			Dept parDept = deptService.getById(sysDept.getParentId());
+			Dept parDept = deptService.selectById(sysDept.getParentId());
 			model.addAttribute("parentDeptName", parDept.getName());
 		}
 		return  prefix + "/edit";

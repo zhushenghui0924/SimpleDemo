@@ -25,6 +25,7 @@ public class FileDO implements Serializable {
     private Long id;
     /**
      * 文件类型
+     * 0 图片 1文档 2视频 3音乐
      */
     @Column(name = "type")
     private Integer type;
@@ -33,6 +34,16 @@ public class FileDO implements Serializable {
      */
     @Column(name = "url")
     private String url;
+    /**
+     *文件原始名称
+     */
+    @Column(name = "file_name")
+    private String fileName;
+    /**
+     *文件大小KB
+     */
+    @Column(name = "size")
+    private Long size;
     /**
      * 	创建者
      */
@@ -54,9 +65,18 @@ public class FileDO implements Serializable {
     @Column(name = "update_time")
     private Date updateTime;
 
-    public FileDO(Integer type, String url, Date createTime) {
+    public FileDO(Integer type, String url,String fileName, Date createTime) {
         this.type = type;
         this.url = url;
+        this.createTime = createTime;
+        this.fileName=fileName;
+    }
+
+    public FileDO(Integer type, String url, String fileName, Long size, Date createTime) {
+        this.type = type;
+        this.url = url;
+        this.fileName = fileName;
+        this.size = size;
         this.createTime = createTime;
     }
 
